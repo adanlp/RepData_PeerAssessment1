@@ -160,9 +160,9 @@ $(document).ready(function () {
 </div>
 <div id="load-the-data" class="section level4">
 <h4>2. Load the data</h4>
-<pre class="r"><code>#my_url &lt;- &quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip&quot;
-#download.file(my_url, destfile=&quot;activity.zip&quot;)
-#unzip(&quot;activity.zip&quot;)
+<pre class="r"><code>my_url &lt;- &quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip&quot;
+download.file(my_url, destfile=&quot;activity.zip&quot;)
+unzip(&quot;activity.zip&quot;)
 my_df &lt;- read.csv(&quot;activity.csv&quot;)</code></pre>
 </div>
 </div>

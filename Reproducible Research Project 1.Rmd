@@ -5,6 +5,7 @@ date: "February 11, 2018"
 output:
   html_document: default
   pdf_document: default
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -33,9 +34,9 @@ library(ggplot2)
 
 #### 2. Load the data
 ```{r}
-#my_url <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
-#download.file(my_url, destfile="activity.zip")
-#unzip("activity.zip")
+my_url <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
+download.file(my_url, destfile="activity.zip")
+unzip("activity.zip")
 my_df <- read.csv("activity.csv")
 ```
 
