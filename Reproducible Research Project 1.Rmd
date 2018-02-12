@@ -2,7 +2,9 @@
 title: "Reproducible Research Project 1"
 author: "adanlp"
 date: "February 11, 2018"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -31,9 +33,9 @@ library(ggplot2)
 
 #### 2. Load the data
 ```{r}
-my_url <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
-download.file(my_url, destfile="activity.zip")
-unzip("activity.zip")
+#my_url <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
+#download.file(my_url, destfile="activity.zip")
+#unzip("activity.zip")
 my_df <- read.csv("activity.csv")
 ```
 
@@ -61,9 +63,7 @@ plot1 <- ggplot(df.original, aes(steps)) +
 	ylim(c(0,30))
 ```
 
-```{r, echo=FALSE}
-plot(plot1)
-```
+![](figure/rrp1_plot1.png)
 
 #### 3. Calculate and report the mean and median of the total number of steps taken per day
 
@@ -92,9 +92,7 @@ plot2 <- ggplot(df.sbi, aes(interval, avg.steps)) +
 	labs(x="5-minutes Interval", y="Average steps per day")
 ```
 
-```{r, echo=FALSE}
-plot(plot2)
-```
+![](figure/rrp1_plot2.png)
 
 #### 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -147,9 +145,7 @@ plot3 <- ggplot() +
 	labs(x="Steps per day", y="Frecuency")
 ```
 
-```{r, echo=FALSE}
-plot(plot3)
-```
+![](figure/rrp1_plot3.png)
 
 ```{r}
 df.imputed.summ <- summary(df.imputed$steps)
@@ -181,8 +177,6 @@ plot4 <- ggplot(sbi.wd, aes(interval, avg.steps)) +
 	labs(x="5-minutes Interval", y="Average steps per day")
 ```
 
-```{r, echo=FALSE}
-plot(plot4)
-```
+![](figure/rrp1_plot4.png)
 
 We can see that there are differences in activity patterns depending on the type of day, with some increase in the averge number of steps during the weekends.
