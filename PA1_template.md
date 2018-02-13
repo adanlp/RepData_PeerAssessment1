@@ -73,7 +73,7 @@ df.original.summ <- summary(df.original$steps)
 df.original.summ
 ```
 
-The average number of steps per day is `r format(df.original.summ[[4]], digits=5)`; and the Median is `r format(df.original.summ[[3]], digits=5)` steps per day.
+The average number of steps per day is 10766; and the Median is 10765 steps per day.
 
 ## What is the average daily activity pattern?
 
@@ -104,7 +104,7 @@ sbi.max <- df.sbi %>%
 sbi.max
 ```
 
-The maximum number of steps is `r format(sbi.max$avg.steps, digits=3)`, at interval `r format(sbi.max$interval, digits=3)`, which correspond to 8:35 in the morning.
+The maximum number of steps is 206, at interval 835, which correspond to 8:35 in the morning.
 
 ## Imputing missing values
 
@@ -153,7 +153,7 @@ df.imputed.summ <- summary(df.imputed$steps)
 df.imputed.summ
 ```
 
-After imputing missing values, the average number of steps per day is `r format(df.imputed.summ[[4]], digits=5)`; and the Median is `r format(df.imputed.summ[[3]], digits=5)` steps per day. While there is no change in these values, We can see that the frecuency in the range between 10000 and 15000 steps increased from 28 to 36.
+After imputing missing values, the average number of steps per day is 10766; and the Median is 10765 steps per day. While there is no change in these values, We can see that the frecuency in the range between 10000 and 15000 steps increased from 28 to 36.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 

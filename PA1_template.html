@@ -126,6 +126,7 @@ $(document).ready(function () {
 </div>
 
 
+<p><code>{r setup, include=FALSE} knitr::opts_chunk$set(echo = TRUE)</code></p>
 <div id="intro" class="section level2">
 <h2>Intro</h2>
 <p>This document is the report for the Reproducible Research Course Project 1. The purpose is to answer some specific questions regarding data collected from a personal activity monitoring device. Two months of data were collected at 5 minutes intervals. The data is avaliable at the course web site:</p>
@@ -141,26 +142,13 @@ $(document).ready(function () {
 <h2>Loading and Preprocesing the data</h2>
 <div id="load-required-libraries" class="section level4">
 <h4>1. Load required libraries</h4>
-<pre class="r"><code>library(dplyr)</code></pre>
-<pre><code>## 
-## Attaching package: 'dplyr'</code></pre>
-<pre><code>## The following objects are masked from 'package:stats':
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>library(lubridate)</code></pre>
-<pre><code>## 
-## Attaching package: 'lubridate'</code></pre>
-<pre><code>## The following object is masked from 'package:base':
-## 
-##     date</code></pre>
-<pre class="r"><code>library(ggplot2)</code></pre>
+<pre class="{r}"><code>library(dplyr)
+library(lubridate)
+library(ggplot2)</code></pre>
 </div>
 <div id="load-the-data" class="section level4">
 <h4>2. Load the data</h4>
-<pre class="r"><code>my_url &lt;- &quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip&quot;
+<pre class="{r}"><code>my_url &lt;- &quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip&quot;
 download.file(my_url, destfile=&quot;activity.zip&quot;)
 unzip(&quot;activity.zip&quot;)
 my_df &lt;- read.csv(&quot;activity.csv&quot;)</code></pre>
@@ -171,7 +159,7 @@ my_df &lt;- read.csv(&quot;activity.csv&quot;)</code></pre>
 <p>For this part of the project, missing values (NAs) were ignored.</p>
 <div id="calculate-the-total-number-of-steps-taken-per-day" class="section level4">
 <h4>1. Calculate the total number of steps taken per day</h4>
-<pre class="r"><code>df.original &lt;- my_df %&gt;%
+<pre class="{r}"><code>df.original &lt;- my_df %&gt;%
   select(steps, date) %&gt;%
   group_by(date) %&gt;%
   summarize(steps=sum(steps)) %&gt;%
@@ -179,7 +167,7 @@ my_df &lt;- read.csv(&quot;activity.csv&quot;)</code></pre>
 </div>
 <div id="make-a-histogram-of-the-total-number-of-steps-taken-each-day" class="section level4">
 <h4>2. Make a histogram of the total number of steps taken each day</h4>
-<pre class="r"><code>plot1 &lt;- ggplot(df.original, aes(steps)) +
+<pre class="{r}"><code>plot1 &lt;- ggplot(df.original, aes(steps)) +
     geom_histogram(breaks=seq(0, 25000, by=5000), fill=&quot;grey&quot;) + 
     labs(title=&quot;Steps Per Day Histogram&quot;) +
     labs(subtitle=&quot;NAs ignored&quot;) +
@@ -192,10 +180,8 @@ my_df &lt;- read.csv(&quot;activity.csv&quot;)</code></pre>
 </div>
 <div id="calculate-and-report-the-mean-and-median-of-the-total-number-of-steps-taken-per-day" class="section level4">
 <h4>3. Calculate and report the mean and median of the total number of steps taken per day</h4>
-<pre class="r"><code>df.original.summ &lt;- summary(df.original$steps)
+<pre class="{r}"><code>df.original.summ &lt;- summary(df.original$steps)
 df.original.summ</code></pre>
-<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##      41    8841   10765   10766   13294   21194</code></pre>
 <p>The average number of steps per day is 10766; and the Median is 10765 steps per day.</p>
 </div>
 </div>
@@ -203,7 +189,7 @@ df.original.summ</code></pre>
 <h2>What is the average daily activity pattern?</h2>
 <div id="make-a-time-series-plot-of-the-5-minute-interval-x-axis-and-the-average-number-of-steps-taken-averaged-across-all-days-y-axis" class="section level4">
 <h4>1. Make a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)</h4>
-<pre class="r"><code>df.sbi &lt;- my_df %&gt;%
+<pre class="{r}"><code>df.sbi &lt;- my_df %&gt;%
   select(steps, interval) %&gt;%
   filter(!is.na(steps)) %&gt;%
   group_by(interval) %&gt;%
@@ -221,14 +207,10 @@ plot2 &lt;- ggplot(df.sbi, aes(interval, avg.steps)) +
 </div>
 <div id="which-5-minute-interval-on-average-across-all-the-days-in-the-dataset-contains-the-maximum-number-of-steps" class="section level4">
 <h4>2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?</h4>
-<pre class="r"><code>sbi.max &lt;- df.sbi %&gt;%
+<pre class="{r}"><code>sbi.max &lt;- df.sbi %&gt;%
   select(interval, avg.steps) %&gt;%
   filter(avg.steps==max(avg.steps))
 sbi.max</code></pre>
-<pre><code>## # A tibble: 1 x 2
-##   interval avg.steps
-##      &lt;int&gt;     &lt;dbl&gt;
-## 1      835       206</code></pre>
 <p>The maximum number of steps is 206, at interval 835, which correspond to 8:35 in the morning.</p>
 </div>
 </div>
@@ -236,10 +218,9 @@ sbi.max</code></pre>
 <h2>Imputing missing values</h2>
 <div id="calculate-and-report-the-total-number-of-missing-values-in-the-dataset-i.e.the-total-number-of-rows-with-nas" class="section level4">
 <h4>1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)</h4>
-<pre class="r"><code>df.na &lt;- nrow(my_df[is.na(my_df$steps),])
+<pre class="{r}"><code>df.na &lt;- nrow(my_df[is.na(my_df$steps),])
 df.na</code></pre>
-<pre><code>## [1] 2304</code></pre>
-<p>There are 2304 NAs in the dataset.</p>
+<p>There are <code>r format(df.na, digits=4)</code> NAs in the dataset.</p>
 </div>
 <div id="devise-a-strategy-for-filling-in-all-of-the-missing-values-in-the-dataset.-the-strategy-does-not-need-to-be-sophisticated.-for-example-you-could-use-the-meanmedian-for-that-day-or-the-mean-for-that-5-minute-interval-etc." class="section level4">
 <h4>2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.</h4>
@@ -247,20 +228,13 @@ df.na</code></pre>
 </div>
 <div id="create-a-new-dataset-that-is-equal-to-the-original-dataset-but-with-the-missing-data-filled-in." class="section level4">
 <h4>3. Create a new dataset that is equal to the original dataset but with the missing data filled in.</h4>
-<pre class="r"><code>df.imputednas &lt;- my_df %&gt;%
+<pre class="{r}"><code>df.imputednas &lt;- my_df %&gt;%
 mutate(steps=replace(steps, is.na(steps), df.original.summ[[3]]/288))
 head(df.imputednas)</code></pre>
-<pre><code>##      steps       date interval
-## 1 37.37847 2012-10-01        0
-## 2 37.37847 2012-10-01        5
-## 3 37.37847 2012-10-01       10
-## 4 37.37847 2012-10-01       15
-## 5 37.37847 2012-10-01       20
-## 6 37.37847 2012-10-01       25</code></pre>
 </div>
 <div id="make-a-histogram-of-the-total-number-of-steps-taken-each-day-and-calculate-and-report-the-mean-and-median-total-number-of-steps-taken-per-day.-do-these-values-differ-from-the-estimates-from-the-first-part-of-the-assignment-what-is-the-impact-of-imputing-missing-data-on-the-estimates-of-the-total-daily-number-of-steps" class="section level4">
 <h4>4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?</h4>
-<pre class="r"><code>df.imputed &lt;- df.imputednas %&gt;%
+<pre class="{r}"><code>df.imputed &lt;- df.imputednas %&gt;%
   select(steps, date) %&gt;%
   group_by(date) %&gt;%
   summarize(steps=sum(steps))
@@ -275,10 +249,8 @@ plot3 &lt;- ggplot() +
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAmYAAAHkCAMAAACjYhP2AAABR1BMVEUAAAAAADoAAGYAOjoAOmYAOpAAZmYAZpAAZrYzMzM6AAA6ADo6AGY6OgA6Ojo6OmY6OpA6ZmY6ZpA6ZrY6kJA6kLY6kNtNTU1NTW5NTY5NbqtNjshfX19mAABmADpmAGZmOgBmOjpmOmZmZmZmkJBmkLZmkNtmtpBmtrZmtttmtv9uTU1uTW5uTY5ubqtuq+SOTU2OTW6OTY6OyP+QOgCQOjqQOmaQZgCQZjqQZmaQkDqQkGaQkLaQtpCQtraQttuQ27aQ2/+rbk2rbm6rbo6ryKur5P+2ZgC2Zjq2kDq2kGa2tpC2ttu225C229u22/+2/7a2/9u2///Ijk3I///bkDrbtmbbtpDb25Db27bb29vb2//b/7bb/9vb///kq27k///r6+v/tmb/yI7/25D/27b/29v/5Kv//7b//8j//9v//+T///8yHaaNAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAU2UlEQVR4nO2c/3vb1nWHITtqGVpbk6aTEmdsvTXdFrqxnUjZumZdJ28V232pG1l01i2TPYqZKAr//8+79wIgCAs8IqHDAxB83+dJJIH43HMhvL73AiIYxQBrJ6q7A7ANoBkYgGZgAJqBAWgGBqAZGIBmYACagQGVNJv+659E0f2fnbtvx395qtWV6VFn8YvDe0mdSW/f7bh7nr+i2ANYF1U0mx5FAX+ys9OvQEXNFHsA66KKZqNo90Ucf3cU9evRrPwVaDBVNBvuHPsvk14njGvuvH/3KIp+8CJIMOpG7/iXp7+Iop1P08Tc9tm+zqphdO9FssMr9+rvg2av3Hy881fe5X48Z9WN0Sxtf74H77xIm9r5mWsqaz9rcNzdf9V137iO/HBuMAQLqo1m2YiSnuRx18+hTr5J7/1u8l06sfaT/fLt+b7To/vdKJ39hn7bO4866Xc+5yT2pRKjb2qWtZ/2YJS1mjXQydqfNTju+j7s/KobXgVTKl0C/Dbaef8f/zt860//9MgPW990O06CqHM+/Z07jePuB+fuf+n5zLfn+zpBMlsnvZ1f+0nYb/TjW8gNvFiDbBWW2hKc8prl7Sc9iD71++yezzfl288bdH5/Gr9K/lXsMpzZUu2Gxh9/0U2nRH+S3XQUJ99OeuEEOkPG3fuf/H62//z2bF8nQLaoSjamUv7Xv/191w83ozCkZSbe1CxrP+lBiA52jpORdhw0TttPGwz7hI4ULyHAgMr3zabf/IU/o/4kj1IBdo6TmS4s3gZ+yw/TpVe+Pd937mQn67BwCZDMqVEnyczmzJtrs1n7iWZhdna7J+vGaVibhfZnDQaXk44M0MyYO9yeDedxoWbxN25RHs3kWFIzN7u+/w///m0iw73T3IebNzSy9mXN8gbRrEYqaJbOgMnqae4kz16aTVd//Lv0GiDfnu87p1kyaU6CC/04mz5H0d/kdy9K75uF9hdPmn6vvEE0q5Eqo9kgTFbTV34lPQzXjG7Z7dbdfm0W/Vmy1B+5b+Lp79JJL9+e7zunmVu3h1sTYQF17m9OJFb+6WzOvKFZ3n7Sg7JLgESzrEE0q5Eqmjlporn7B/vZrLnvXrnfTaay9IZDej7z7fm+8wvxUXZDY/4PDK7t/M7rghsaXvSFNzQSV7MG0axGqv9Ncyes7yePIjdcjN066f6n4Sz6u5/+hXD79IP0dM5tn+1buN5zC613vvaXAOE266/DzYz8fki86Pasbz/vQX579q97s0uAWYNoViO679BIl/pLb5cZZXd3K/Tj7T9JQa00WLPvHlUYdMbd77uRblBZUFgLjdXMLwArDEnFNSE0hMZq5nz5oEoXCmtCaAi8exYMQDMwAM3AADQDA9AMDEAzMADNwAA0AwPQDAyooFn6zv09/5aJ/F3U2Yt7Sz01OfnxcdlmjaaF5qEuKmnm35QTTvr06KfVnkVbqJnQtKTZW6+hWcOootneL/fTEzve+4/lh5h5FmkmNY1mm0slzb7+29PkxA478cBPc6Pknatxcr7H3ej7R32nTHiPhfvJvTb+waPwHu70DbTfCx74nadH/fm03PT06JNu1Bn75+GmX34Vnlfy9fb+0EseRi42D42hkmano+T8+kFjtHs++5q8OOn142HU9+us0b3w0yh51MQZFQ/92/X7cfYAUj8ev/dtIS027d8R6x9fGT84noZHD/YTzU5TYYvNQ2Ooptn0y2N/YoMHvX74L38x3epUyARwrqQ/+W8ze+IwZA33i2mxaW9S+p//4vJzmt1sHppCNc3i8QfhpOeP7mYfl+E2D8OD3f30zI/mfko+R2OYezB+73++PC6mxabf1my0+59zmt1oHppCRc3iwSfJuXU/PgindJQ8EzI3muUC+NEsHW78nnMe/PZX750X02LTt45mbzUPDaGqZv7WwyC54zDY9zrkLmRrs+TMZ2uzdPGUvZ4unvzTu8W02HRBs7AMC4255h8clzUPDaGqZu7c/iEdMpwFN640v5ePX+mVpg9NetlnT/0ozU5+cvr2darUdEGzn4YL2WEU/egnfpLtlzQPDWFNf2xa/6wVJk3YENag2dw8t0bQbJNYx2g2nM1zawTNNgneoQEGoBkYgGZgAJqBAWgGBlTQ7H8XsfgVxUh7ijS1X5pF0Kz2Ik3tF5q1qkhT+4VmrSrS1H6hWauKNLVfaNaqIk3tF5q1qkhT+4VmrSrS1H6hWauKNLVfaNaqIk3tF5q1qkhT+4VmrSrS1H6hWauKNLVfaNaqIk3tF5q1qkhT+4VmrSrS1H6hWauKNLVfaNaqIk3tF5pZFYlMaOjBo5lVETRTiqCZBJopRdBMAs2UImgmgWZKETSTQDOlCJpJoJlSBM0k0EwpgmYSaKYUuYNmW4CRZtsDo1kZRpoZHMnmjmYm/au3CJopRdBMAs2UImgmgWZKETSTQDOlCJpJoJlSBM0k0EwpgmYSaKYUQTMJNFOKoJkEmilF0EwCzZQiaCaBZkoRNJNAM6UImkmgmVIEzSTQTCmCZhJophRBMwk0U4qgmQSaKUXQTALNlCJoJoFmShE0k0AzpQiaSaCZUgTNJNBMKYJmEmimFEEzCTRTiqCZBJopRdBMAs2UImgmgWZKETSTQDOlCJpJoJlSBM0k0EwpgmYSaKYUQTMJNFOKoJkEmilF0EwCzZQiaCaBZkoRNJNAM6UImkmgmVIEzSTQTCmCZhJophRBMwk0U4qgmQSaKUXQTALNlCJoJoFmShE0k0AzpciSml0cHHx0FsdXzw4evkEzNFs1spxml5+dxa8/jq+fH/ovaIZmK0aWHM0S1a6+OAvGoRmarRZZXjM3jF0+eRNffX7ifnjXcWti8zHSbHu47VgvH394El88zDTzmPwzqLeIkWYGR7Ixo5nzKx/N0AzNVoksr1n88pC1GZpViyynWTpbXj9/ypUmmlWILDmavT44cGsz7puhWbXICpPm25j0r94iaKYUQTMJNFOKoJkEmilF0EwCzZQiaCaBZkoRNJNAM6UImkmgmVIEzSTQTCmCZhJophRBMwk0U4qgmQSaKUXQTALNlCJoJoFmShE0k/hzExp68GhmVQTNlCJoJoFmShE0k0AzpQiaSaCZUgTNJNBMKYJmEmimFEEzCTRTiqCZBJopRdBMAs2UImgmgWZKETSTQDOlCJpJoJlSBM0k0EwpgmYSaKYUQTMJNFOKoJkEmilF0EwCzZQiaCaBZkoRNJNAM6UImkmgmVIEzSTQTCmCZhJophRBMwk0U4qgmQSaKUXQTALNlCJoJoFmShE0k0AzpQiaSaCZUuQOmm0BRpptD4xmZRhpZnAkmzuamfSv3iJophRBMwk0U4qgmQSaKUXQTALNlCJoJoFmShE0k0AzpQiaSaCZUgTNJNBMKYJmEmimFEEzCTRTiqCZBJopRdBMAs2UImgmgWZKETSTQDOlCJpJoJlSBM0k0EwpgmYSaKYUQTMJNFOKoJkEmilF0EwCzZQiaCaBZkoRNJNAM6UImkmgmVIEzSTQTCmCZhJophRBMwk0U4qgmQSaKUXQTALNlCJoJoFmShE0k0AzpQiaSaCZUgTNJNBMKVKm2aS3c4xmHjRTipSPZoMo2j1HMzTTipRr5ke0KNpHMzTTiSzSLBHt3imaoZlCZJFmwyjquMlTmjpN+ldvETRTipRqNj2Kor7/ZiQNZyb9q7cImilFyjSb9MTJEs3QbNVI6Wi2HCb9q7cImilFSjWbHu27/zpohmZKkVLNBp3g2i2emfSv3iJophQp02zSu339j2ZotkIEzSTQTClSplk89IJNenN/Bbh8fHBwGMdXzw4evkEzNFs1UqpZPIqiwt+arj4/iS9/fnL9/DB+/TGaodmqkXLN3ubCu/Xy8OqLs/jyszM0Q7MVI8tplo5ol0/ehIEtjt913JrYfIw02x4Kmo27ftIs/uH8+vnT+OJhppnH5J9BvUWMNDM4kgaOZmV3zK6ePXUXAk/QDM2qRMo0S29ozHP5+NC7xtoMzSpFykeztzVLLAsTJ1eaaLZ6pEyzmzdmXx94DrlvhmbVIuWTZnTzEuAmJv2rtwiaKUVKR7PlMOlfvUXQTCmCZhJophQp12wYRf3hbY/QmfSv3iJophQp1Wyw+22vz/vN0EwtUqbZpNf3t854IxCaaUXQTALNlCKlk+bQT5qF95uhGZrdJVKq2Y33m6EZmt0pUq7ZUpj0r94iaKYUQTMJNFOKlGnGH5sy0Ewpsng0m/z4ls/SM+lfvUXQTCmyWLN4dMufAUz6V28RNFOKSJoxaaKZUkTQTPxwMzRDsxUiZZqllwC3fc6xSf/qLYJmShFhNLsNk/7VWwTNlCJoJoFmSpFSzfh8sxQ0U4qUasbnm6WgmVKkTDM+eCoDzZQiaCaBZkqRMs1KPt8MzdDsLpFSzXi/WQqaKUXKNVsKk/7VWwTNlCJoJoFmSpFyzXhOMwHNlCKlmvGcZgqaKUXKNOMBugw0U4qgmQSaKUVKJ02e00xBM6VIqWbcN0tBM6VIuWZLYdK/eougmVKkTLObnz2LZmh2p0iZZiWfpI1maHaXSJlm8a13ZtEMzVaKlI9mPHWegGZKkdLRbDlM+ldvETRTiqCZBJopRW5otuT6H83QbIVIuWa3/Z0JzdBspcgdNNsCjDTbHhjNyjDSzOBINnc0M+lfvUXQTCmCZhJophQp0SzK4PYsmilFbmi2PCb9q7cImilF0EwCzZQiaCaBZkoRNJNAM6UImkmgmVIEzSTQTCmCZhJophRBMwk0U4qgmQSaKUXQTALNlCJoJoFmShE0k0AzpQiaSaCZUgTNJNBMKYJmEmimFEEzCTRTiqCZBJopRdBMAs2UImgmgWZKETSTQDOlCJpJoJlSBM0k0EwpgmYSaKYUQTMJNFOKbKxmNgaYgGZoZgCaoZkBaIZmBqAZmhmAZmhmAJqhmQFohmYGoBmaGYBmaGYAmqGZAWiGZgagGZoZgGZoZgCaoZkBaIZmBqAZmhmAZjmXn53F8dWzg4dv0EwZNJtxcfDRWXz9/DB+/TGaKYNmGS8//I0bza6+OEtGNTTTBM2Kk+blkzfx1ecn7qd3Hbcl1kvdbihS7y/SlKU0u3iYaeYx+WewkLrdUITRrKhZPpqhmSJoVtSMtdlaQLOiZtfPn3KlqQ+aFTXjvtlaQDMJk/4tpG43FEEzNDMAzdDMADRDMwPQDM0MQDM0MwDN0MwANEMzA9AMzQxAMzQzAM3QzAA0QzMD0AzNDEAzNDMAzdDMADRDMwPQDM0MQDM0MwDN0MwANEMzA9AMzQxAMzQzAM3QzAA0QzMD0AzNDEAzNDMAzdDMADRDMwPQDM0MQDM0MwDN0MwANEMzA9AMzQxAMzRrC2hWKVL3ads00KxSpO7TtmmgWaVI3adt00CzSpG6T9umgWaVInWftk0DzSpF6j5tmwaaVYrUfdo2DTSrFKn7tG0aG6vZQur+jUIJiuf3DmiOZnX/RqGEjR3NFhar+zcKJaAZGIBmYACagQFoBgagGRiAZmAAmoEBaAYGoBkYgGZgAJqBAWgGBqAZGIBmYACagQFoBgagGRiAZmAAmoEBaAYGoBkYgGZgAJqBAWgGBqAZGIBmYACaQVtAMzAAzcAANAMD0AwMQDMwAM3AADQDA9AMDEAzMADNwAA0AwPQDAxAMzAAzcAANAMD0AwMUNLs6tnBwzdoBgvQ0ez6+WH8+mM0gwXoaHb1xVl8+dkZmkE5OppdPnkTX31+4r5717FMAmCepTS7eJhp5lk4mmk+ErMFRZrar9qebMpHMzSrNbJxRVbSbMm12cb9Euot0tR+1abZ9fOny1xpbtwvod4iTe1XfY8DL3ffbON+CfUWaWq/mv7U+cb9Euot0tR+oVmrijS1X2jWqiJN7ReatapIU/uFZq0q0tR+oVmrijS1X2jWqiJN7ReatapIU/uFZq0q0tR+oVmrijS1X2jWqiJN7VdDNFuIyRse21OkRYdyaxE0q61Iiw4FzZpbpEWHgmbNLdKiQzHVDGABaAYGoBkYgGZgAJqBAWqaFZ5K0eX1wcHBR2dZheIXJcLjgaUFNOuEKus9msvHBweH6z6UtMgKR6KlWfHTXHR5eThXofhFiQv/6yotoFknVFnv0fiHti9/frLeQ0mLrHIkWpoVnxhW5fqfT+YqFL/oVHj54W9cU6UFFOskVdZ7NBf+DL88XO+hpEVWORItzYqff6CKG4b9GJ1WKH7RquF/M6UFVOv4Kus/mkXHoF1klSPR0qz4aS6q+PHZ/ctJKxS/qNVwApQWUK0TZF730fiPCFj7ofgiqxzJBoxmgZeHLRnNAms8mqtnT+O1H0ooEljySDZgbRZYsN7Qav7SYG1W0GxdVS4f+3X5mg8lKRJY8kj0rjSfrutK04/D1/9yllYoftHC/2ZKC6jWyabm9R1NKsB6DyUtssqRbMh9sw9P1nk/y/q+2fqOxt/K8uvytR5KVmSFI+GvAGAAmoEBaAYGoBkYgGZgAJqBAWgGBqAZGIBmEsMoinaO3TffvbhDK6N7p1od2lTQTGDo/RhF/Xj84PgOzaAZmglMj/r+y2D3HM3uCJotZnq0n3wz7kbRvvsxipww4wdfRdHuebI16ic7ZNuyffZ+GSVuTXrRzld+i995Px503LZhp64jqg00Exh5Mzx+NJseOTuGbmTr3jv134cRbtwNnmXb8n1Skya9ffffvdNJrx/mYD+wpYPkVoFmIv4aoJNoFqY+p0swy20Y7+VTYbatsI8nbHB6/d95HHbwus0HtwU0u41JL1mbeeP8xBdGMa/LIBgYyLYV9vEMw+y6F64kwkWrmzC3cM5Es9vxI5fXzBsT50rFYeGVrMBmms3v48k0m/ScYn7reO/rLZwz0UwglSXVbLSTqJNMkOnEl+g22zbbJ9MsTJrufyOvm391evTJFs6ZaCYx8Nb4Zb23aXrkVHGmZMv9YFBm4uwSIN0n02zS64RLAG/YuOubG0ZbOGeimUhYa/mLzUHUCTcrwtT3VbIoG2V/IojzbbN9svts2Q0Nt5Db+Sc/9M2uDrYKNFuVslu1K9y+3cbrTDRbnTtqNtxX7c2GgGarcifNxt30WnTLQDMwAM3AADQDA9AMDEAzMADNwAA0AwP+HwxhWY8xxEvTAAAAAElFTkSuQmCC" />
 
 </div>
-<pre class="r"><code>df.imputed.summ &lt;- summary(df.imputed$steps)
+<pre class="{r}"><code>df.imputed.summ &lt;- summary(df.imputed$steps)
 df.imputed.summ</code></pre>
-<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##      41    9819   10765   10766   12811   21194</code></pre>
 <p>After imputing missing values, the average number of steps per day is 10766; and the Median is 10765 steps per day. While there is no change in these values, We can see that the frecuency in the range between 10000 and 15000 steps increased from 28 to 36.</p>
 </div>
 </div>
@@ -286,7 +258,7 @@ df.imputed.summ</code></pre>
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
 <div id="create-a-new-factor-variable-in-the-dataset-with-two-levels---weekday-and-weekend-indicating-whether-a-given-date-is-a-weekday-or-weekend-day." class="section level4">
 <h4>1. Create a new factor variable in the dataset with two levels - “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.</h4>
-<pre class="r"><code>sbi.wd &lt;- df.imputednas %&gt;%
+<pre class="{r}"><code>sbi.wd &lt;- df.imputednas %&gt;%
      select(steps, interval, date) %&gt;%
      mutate(weekday=ifelse(wday(date) %in% c(6,7), 'weekend', 'weekday')) %&gt;%
      group_by(interval, weekday) %&gt;%
@@ -294,7 +266,7 @@ df.imputed.summ</code></pre>
 </div>
 <div id="make-a-panel-plot-containing-a-time-series-plot-of-the-5-minute-interval-x-axis-and-the-average-number-of-steps-taken-averaged-across-all-weekday-days-or-weekend-days-y-axis." class="section level4">
 <h4>2. Make a panel plot containing a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).</h4>
-<pre class="r"><code>plot4 &lt;- ggplot(sbi.wd, aes(interval, avg.steps)) +
+<pre class="{r}"><code>plot4 &lt;- ggplot(sbi.wd, aes(interval, avg.steps)) +
     geom_line() +
     facet_grid(weekday ~ .) +
     labs(title=&quot;Average steps by Interval&quot;) +
